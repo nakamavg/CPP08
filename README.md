@@ -106,3 +106,93 @@ int main() {
 ```
 
 ## ex 01
+
+## Mas algoritmos 
+
+- Estos Iteradores de Contenedor (begin() y end()):
+	- Son métodos que devuelven iteradores que apuntan al primer elemento (begin()) y más allá del último elemento (end()) del contenedor respectivamente. 
+
+### std::sort() 
+- Ordena los elementos en el rango especificado usando el operador <. En mi caso, lo he utilizado para ordenar los números almacenados para calcular el rango más corto.
+`std::sort(sortedNumbers.begin(), sortedNumbers.end());`
+### std::min_element() y std::max_element()
+- Encuentran el mínimo y el máximo elemento en un rango de iteradores respectivamente
+```c++
+int minElement = *std::min_element(numbers.begin(), numbers.end());
+int maxElement = *std::max_element(numbers.begin(), numbers.end());
+```
+### std::distance():
+- Calcula la distancia entre dos iteradores, que es útil para determinar cuántos elementos hay entre dos puntos en un contenedor.
+`std::distance(begin, end);`
+
+## Puntos claves del ejercicicio
+
+1. El contructor de la clase es
+```cpp    
+Span(unsigned int N); 
+```
+- Donde N va a ser el tamaño de nuestro Vector
+
+```cpp
+#pragma once
+
+#include <vector>
+#include <stdexcept>
+#include <algorithm>
+
+class Span {
+public:
+    Span(unsigned int N); 
+    Span(const Span& other); 
+    Span& operator=(const Span& other);
+    ~Span(); 
+
+    void addNumber(int number);
+    void addNumber(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+    int shortestSpan() const;
+    int longestSpan() const;
+
+    class SpanFullException : public std::exception {
+    public:
+        virtual const char* what() const throw() {
+            return "Span is already full";
+        }
+    };
+
+    class NoSpanFoundException : public std::exception {
+    public:
+        virtual const char* what() const throw() {
+            return "No span can be found";
+        }
+    };
+
+private:
+    std::vector<int> numbers;
+    unsigned int maxSize;
+};
+```
+- A la hora de añadir un numero llamaremos a addNumber
+
+```cpp
+void Span::addNumber(int number) {
+    if (numbers.size() >= maxSize) {
+        throw SpanFullException();
+    }
+    numbers.push_back(number);
+}
+```
+- tiraremos una excepcion si nos pasamos del tamaño maxSize , que es el parametro que le pasamos al constructor previamente
+
+- Uso el metodo push_back de la clase vectores para añadir el numero
+
+- A la hora de añadir varios numeros es decir un array como nos indica el subject donde le pasaremos los iteradores/punteros begin y end de el array de ints para que los recorra y los inserte en nuestro vector 
+
+```cpp
+void Span::addNumber(std::vector<int>::iterator begin, std::vector<int>::iterator end) {
+    if (numbers.size() + std::distance(begin, end) > maxSize) {
+        throw SpanFullException();
+    }
+    numbers.insert(numbers.end(), begin, end);
+}
+```
+-  El insert nos introducira todos los numeros del array desde el final del vector gracias al metodo end(), desde el begin del array al puntero final end;
