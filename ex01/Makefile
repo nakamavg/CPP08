@@ -1,19 +1,19 @@
 # Variables
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CPP = c++
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 TARGET = span
 
 # Compilación
 all: $(TARGET)
 
 $(TARGET): main.o Span.o
-	$(CXX) $(CXXFLAGS) -o $(TARGET) main.o Span.o
+	$(CPP) $(CPPFLAGS) -o $(TARGET) main.o Span.o
 
 main.o: main.cpp Span.hpp
-	$(CXX) $(CXXFLAGS) -c main.cpp
+	$(CPP) $(CPPFLAGS) -c main.cpp
 
 Span.o: Span.cpp Span.hpp
-	$(CXX) $(CXXFLAGS) -c Span.cpp
+	$(CPP) $(CPPFLAGS) -c Span.cpp
 
 # Limpieza
 clean:

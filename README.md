@@ -196,3 +196,11 @@ void Span::addNumber(std::vector<int>::iterator begin, std::vector<int>::iterato
 }
 ```
 -  El insert nos introducira todos los numeros del array desde el final del vector gracias al metodo end(), desde el begin del array al puntero final end;
+
+## ex02 
+
+- La clase std::stack de la biblioteca estándar de C++ es un contenedor adaptador que proporciona una estructura de datos tipo pila (stack).
+- Permite operaciones de acceso a elementos en el estilo LIFO (último en entrar, primero en salir).
+- Sin embargo, una limitación significativa de std::stack es que no proporciona iteradores, lo que impide recorrer los elementos almacenados de manera directa utilizando algoritmos estándar de la STL (Standard Template Library)
+- Para eso nos proponen en este ejercicio para convertir el stack en algo iterable.
+
